@@ -13,17 +13,32 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   void _openFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom, allowedExtensions: ['mp3'], //excel 파일만 받도록 처리
-    );
-    if (result != null) {
-      File file = File(result.files.single.path.toString());
+    // 권한 상태 확인 후 파일 선택
+    PermissionStatus status = await Permission.storage.status;
+
+    if (status.isGranted) {
+      try {
+        FilePickerResult? result =
+            await FilePicker.platform.pickFiles(allowMultiple: true);
+
+        if (result != null && result.files.single.path != null) {
+          List<File> files = result.paths.map((path) => File(path!)).toList();
+          print("선택된 파일 경로: ${files}");
+        } else {
+          print('파일이 선택되지 않았습니다.');
+        }
+      } catch (e) {
+        print("파일 선택 중 오류 발생: $e");
+      }
+    } else {
+      print('저장소 권한이 없습니다. 권한을 허용해주세요.');
+      await requestStoragePermission();
     }
   }
 
   Future<void> requestStoragePermission() async {
     // 저장소 권한 요청
-    PermissionStatus status = await Permission.storage.request();
+    PermissionStatus status = await Permission.manageExternalStorage.request();
 
     if (status.isGranted) {
       // 권한이 승인되었을 때 실행할 코드
@@ -103,6 +118,7 @@ class _ChatState extends State<Chat> {
                     color: Colors.blueAccent,
                   ),
                   onPressed: () async {
+                    // _openFile();
                     FilePickerResult? result = await FilePicker.platform
                         .pickFiles(allowMultiple: true);
 
