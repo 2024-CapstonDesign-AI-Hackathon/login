@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import '../login.dart';
+import 'package:front/ClassroomList.dart';
+import 'package:front/chat.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Smart Study Login',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white, // 전체 앱의 Scaffold 배경색을 흰색으로 설정
+        dialogBackgroundColor: Colors.white,
       ),
-      home: LoginScreen(), // LoginScreen을 초기 화면으로 설정
+      home: ClassroomList(),
     );
   }
 }
