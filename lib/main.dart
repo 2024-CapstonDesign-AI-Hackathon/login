@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../login.dart';
-import '../question.dart';
+import '../question1.dart'; //객관식
+import '../question2.dart'; //단답식
+import '../question3.dart'; //서술형
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DescriptiveQuestionScreen(), // LoginScreen을 초기 화면으로 설정
+      home: QuestionScreen3(), // LoginScreen을 초기 화면으로 설정
     );
   }
 }
