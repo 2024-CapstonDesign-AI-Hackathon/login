@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:front/ClassroomList.dart';
 import 'package:front/chat.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../login.dart';
+import '../question1.dart'; //객관식
+import '../question2.dart'; //단답식
+import '../question3.dart'; //서술형
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +24,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white, // 전체 앱의 Scaffold 배경색을 흰색으로 설정
         dialogBackgroundColor: Colors.white,
       ),
-      home: ClassroomList(),
+      home: QuestionScreen3(),
     );
   }
 }
