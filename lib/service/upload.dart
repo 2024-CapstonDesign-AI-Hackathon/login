@@ -19,17 +19,17 @@ class Upload {
     try {
       if (file != null) {
         String? access = await storage.read(key: 'Authorization');
-        var response = await http.post(
-          Uri.parse(api.toString()),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': access.toString(),
-          },
-        );
+        var request = http.MultipartRequest('POST', Uri.parse(api.toString()));
+
+        request.headers.addAll(<String, String>{
+          'Authorization': access.toString(),
+        });
+        request.files.add(await http.MultipartFile.fromPath('file', file.path));
+
+        var response = await request.send();
         if (response.statusCode == 200) {
-          Map<String, dynamic> responseBody =
-              jsonDecode(utf8.decode(response.bodyBytes));
-          Summaries summaries = Summaries.fromJson(responseBody);
+          var responseBody = await response.stream.bytesToString();
+          Summaries summaries = Summaries.fromJson(jsonDecode(responseBody));
           return summaries;
         }
         print("dateRequest 메소드 에러");
@@ -44,15 +44,12 @@ class Upload {
 
     if (status.isGranted) {
       try {
-        FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-        if (result != null) {
-          File file = File(result.files.single.path!);
-          return file;
-        } else {
-          // User canceled the picker
-          return null;
-        }
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          allowMultiple: true,
+          type: FileType.custom,
+          allowedExtensions: ['mp3', 'pdf', 'doc'],
+        );
+        print("check");
       } catch (e) {
         print("파일 선택 중 오류 발생: $e");
       }
@@ -70,6 +67,7 @@ class Upload {
       print("저장소 권한이 승인되었습니다.");
     } else if (status.isDenied) {
       print("저장소 권한이 거부되었습니다.");
+      openAppSettings();
     } else if (status.isPermanentlyDenied) {
       print("저장소 권한이 영구적으로 거부되었습니다. 설정에서 권한을 허용해주세요.");
       openAppSettings();

@@ -63,7 +63,7 @@ class LoginScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // 로그인 버튼 눌러왔을 때 로집 추가
+                            // 로그인 버튼 눌러왔을 때  
                             Future<User?> user =
                                 authService.loginRequest("id", "pw");
                             if (user != null) {
