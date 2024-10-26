@@ -13,10 +13,10 @@ class SummaryPage extends StatelessWidget {
     String summaryContent; // 요약 내용
     return Scaffold(
       appBar: AppBar(
-        title: Text('$courseName 요약'), // 앱바에 수업명 + 요약 표시
+        title: Text('$courseName 요약', style: TextStyle(color: Colors.white)), // 앱바에 수업명 + 요약 표시
         backgroundColor: Colors.blueAccent,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // 뒤로가기 아이콘
+          icon: const Icon(Icons.arrow_back, color: Colors.white), // 뒤로가기 아이콘
           onPressed: () {
             Navigator.pop(context); // 이전 화면으로 이동
           },
@@ -148,7 +148,7 @@ class SummaryPage extends StatelessWidget {
           Icons.chat,
           color: Colors.white,
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Color(0xFF5b6ab8),
       ),
     );
   }
