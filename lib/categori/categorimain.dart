@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../chat.dart'; // 챗봇 페이지
-import '../categori/summary_page.dart'; // 요약 페이지
+import '../summary_page.dart'; // 요약 페이지
 import '../question/question1.dart'; // 객관식 페이지
 import '../question/question2.dart'; // 단답식 페이지
 import '../question/question3.dart'; // 서술형 페이지

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/categori/summary_page.dart';
+import 'package:front/summary_page.dart';
 import 'package:front/domain/summaries.dart';
 import 'package:front/service/ClassroomService.dart';
 import 'package:front/service/UserService.dart';

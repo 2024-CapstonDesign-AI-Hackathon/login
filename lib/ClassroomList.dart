@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:front/categori/summary_page.dart';
+import 'package:front/summary_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ClassroomList extends StatefulWidget {
@@ -213,7 +213,7 @@ class _ClassroomListState extends State<ClassroomList> {
             ),
             IconButton(
               onPressed: () {
-                
+
               },
               icon: Icon(
                 Icons.add_circle_outline_outlined,
