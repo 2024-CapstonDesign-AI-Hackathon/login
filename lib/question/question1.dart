@@ -83,7 +83,8 @@ class _QuestionScreenState extends State<QuestionScreen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('객관식 문제'),
+        title: Text('객관식 문제', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blueAccent,
         centerTitle: true,
       ),
       body: PageView.builder(
@@ -141,7 +142,7 @@ class _QuestionScreenState extends State<QuestionScreen1> {
                     },
                     child: Text(
                       '정답 제출',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(fontSize: 18, color: Colors.black)
                     ),
                   ),
                 ),
