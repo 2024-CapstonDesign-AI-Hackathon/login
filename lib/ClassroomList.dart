@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:front/summary_page.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'summary_page.dart';
 
 class ClassroomList extends StatefulWidget {
   @override
@@ -17,6 +15,8 @@ class ClassroomList extends StatefulWidget {
 
 class _ClassroomListState extends State<ClassroomList> {
   ScrollController? _controller;
+  List<String> _courses = []; // 수업명 리스트 추가
+
   Future<void> requestStoragePermission() async {
     PermissionStatus status = await Permission.manageExternalStorage.request();
 
@@ -32,12 +32,11 @@ class _ClassroomListState extends State<ClassroomList> {
   }
 
   void _openFile() async {
-    // 권한 상태 확인 후 파일 선택
     PermissionStatus status = await Permission.storage.status;
     if (status.isGranted) {
       try {
         FilePickerResult? result =
-            await FilePicker.platform.pickFiles(allowMultiple: true);
+        await FilePicker.platform.pickFiles(allowMultiple: true);
         if (result != null && result.files.single.path != null) {
           List<File> files = result.paths.map((path) => File(path!)).toList();
           print("선택된 파일 경로: ${files}");
@@ -53,6 +52,62 @@ class _ClassroomListState extends State<ClassroomList> {
     }
   }
 
+  void _showAddCourseDialog() {
+    final TextEditingController _controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // 다이얼로그 크기 자동 조정
+              children: [
+                Text(
+                  "수업명 입력",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(hintText: "수업명을 입력하세요"),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end, // 버튼을 오른쪽 정렬
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                      },
+                      child: Text("취소"),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (_controller.text.isNotEmpty) {
+                          setState(() {
+                            _courses.add(_controller.text); // 리스트에 수업명 추가
+                          });
+                          Navigator.of(context).pop(); // 다이얼로그 닫기
+                        }
+                      },
+                      child: Text("확인"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
   void initState() {
     super.initState();
     requestStoragePermission();
@@ -64,20 +119,12 @@ class _ClassroomListState extends State<ClassroomList> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ), // 뒤로가기 아이콘
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pop(context); // 이전 화면으로 이동
           },
         ),
-        title: Text(
-          "Chat",
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        title: Text("Classroom List", style: TextStyle(color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -90,32 +137,13 @@ class _ClassroomListState extends State<ClassroomList> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                          left: 20,
-                          right: 20,
-                        ),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: 60,
-                        ),
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: Icon(Icons.person, color: Colors.black, size: 60),
                       ),
                       Column(
                         children: [
-                          Text(
-                            "환영합니다.",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "admin님",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
+                          Text("환영합니다.", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text("admin님", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                         ],
                       ),
                     ],
@@ -123,107 +151,67 @@ class _ClassroomListState extends State<ClassroomList> {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
-                    Icons.logout,
-                    size: 40,
-                    color: Colors.black,
-                  ),
+                  icon: Icon(Icons.logout, size: 40, color: Colors.black),
                 ),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
+            SizedBox(height: 10),
             Container(
-              child: Text(
-                "수업 목록",
-                style: TextStyle(
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Text("수업 목록", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)),
             ),
-            Divider(
-              height: 30,
-              thickness: 3,
-            ),
+            Divider(height: 30, thickness: 3),
             Expanded(
-              child: SingleChildScrollView(
-                controller: _controller,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (BuildContext buildContext, int idx) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
-                              elevation: 4.0, // 그림자 깊이
-                              padding: EdgeInsets.zero,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SummaryPage()),
-                              );
-                            }, // 여기에 원하는 동작을 추가하세요
-                            child: Container(
-                              height: 90,
-                              width: 350,
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "수업명",
-                                    style: TextStyle(
-                                        fontSize: 25, color: Colors.black),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      _openFile();
-                                    },
-                                    icon: Icon(
-                                      Icons.cloud_upload_outlined,
-                                      size: 30,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
+              child: ListView.builder(
+                itemCount: _courses.length,
+                itemBuilder: (BuildContext context, int idx) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
+                        elevation: 4.0,
+                        padding: EdgeInsets.zero,
                       ),
-                    );
-                  },
-                ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SummaryPage()),
+                        );
+                      },
+                      child: Container(
+                        height: 90,
+                        width: 350,
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _courses[idx], // 수업명 표시
+                              style: TextStyle(fontSize: 25, color: Colors.black),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                _openFile();
+                              },
+                              icon: Icon(Icons.cloud_upload_outlined, size: 30),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-            SizedBox(
-              height: 25,
-            ),
+            SizedBox(height: 25),
             IconButton(
-              onPressed: () {
-
-              },
-              icon: Icon(
-                Icons.add_circle_outline_outlined,
-                color: Colors.blue,
-                size: 50,
-              ),
+              onPressed: _showAddCourseDialog, // 수업 추가 다이얼로그 열기
+              icon: Icon(Icons.add_circle_outline_outlined, color: Colors.blue, size: 50),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
           ],
         ),
       ),
