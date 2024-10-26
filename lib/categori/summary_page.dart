@@ -128,9 +128,14 @@ class SummaryPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Chat()),
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return SizedBox(
+                height: MediaQuery.of(context).size.height * 0.9, // 원하는 높이 설정
+                child: Chat(), // 챗봇 페이지를 모달 하단 시트로 표시
+              );
+            },
           );
         },
         child: Icon(
