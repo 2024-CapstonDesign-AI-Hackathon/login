@@ -84,7 +84,8 @@ class _ClassroomListState extends State<ClassroomList> {
                       onPressed: () {
                         Navigator.of(context).pop(); // 다이얼로그 닫기
                       },
-                      child: Text("취소"),
+                      child: Text("취소",
+                        style: TextStyle(fontSize: 18, color: Colors.black)),
                     ),
                     TextButton(
                       onPressed: () {
@@ -95,7 +96,8 @@ class _ClassroomListState extends State<ClassroomList> {
                           Navigator.of(context).pop(); // 다이얼로그 닫기
                         }
                       },
-                      child: Text("확인"),
+                      child: Text("확인",
+                          style: TextStyle(fontSize: 18, color: Colors.black)),
                     ),
                   ],
                 ),
@@ -209,7 +211,7 @@ class _ClassroomListState extends State<ClassroomList> {
             SizedBox(height: 25),
             IconButton(
               onPressed: _showAddCourseDialog, // 수업 추가 다이얼로그 열기
-              icon: Icon(Icons.add_circle_outline_outlined, color: Colors.blue, size: 50),
+              icon: Icon(Icons.add_circle_outline_outlined, color: Color(0xFF5b6ab8), size: 50),
             ),
             SizedBox(height: 20),
           ],
