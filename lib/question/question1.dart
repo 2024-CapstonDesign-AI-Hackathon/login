@@ -142,7 +142,7 @@ class _QuestionScreenState extends State<QuestionScreen1> {
                     },
                     child: Text(
                       '정답 제출',
-                      style: TextStyle(fontSize: 18, color: Colors.black)
+                      style: TextStyle(fontSize: 18)
                     ),
                   ),
                 ),
