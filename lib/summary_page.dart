@@ -33,12 +33,13 @@ class SummaryPage extends StatelessWidget {
             },
           ),
         ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
+      ),drawer: Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          Container(
+            height: 80.0, // 원하는 높이로 설정
+            child: DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blueAccent,
               ),
@@ -46,52 +47,56 @@ class SummaryPage extends StatelessWidget {
                 '메뉴',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 30,
                 ),
               ),
+              margin: EdgeInsets.all(0.0),
+              padding: EdgeInsets.all(16.0),
             ),
-            ListTile(
-              title: Text('챗봇'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Chat()), // 챗봇 페이지
-                );
-              },
-            ),
-            ListTile(
-              title: Text('객관식 문제'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => QuestionScreen1()), // 객관식 페이지
-                );
-              },
-            ),
-            ListTile(
-              title: Text('단답식 문제'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => QuestionScreen2()), // 단답식 페이지
-                );
-              },
-            ),
-            ListTile(
-              title: Text('서술형 문제'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => QuestionScreen3()), // 서술형 페이지
-                );
-              },
-            ),
-          ],
-        ),
+          ),
+          ListTile(
+            title: Text('챗봇'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Chat()), // 챗봇 페이지
+              );
+            },
+          ),
+          ListTile(
+            title: Text('객관식 문제'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => QuestionScreen1()), // 객관식 페이지
+              );
+            },
+          ),
+          ListTile(
+            title: Text('단답식 문제'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => QuestionScreen2()), // 단답식 페이지
+              );
+            },
+          ),
+          ListTile(
+            title: Text('서술형 문제'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => QuestionScreen3()), // 서술형 페이지
+              );
+            },
+          ),
+        ],
       ),
+    ),
+
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
