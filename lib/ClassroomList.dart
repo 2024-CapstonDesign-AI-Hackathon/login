@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:front/categori/summary_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ClassroomList extends StatefulWidget {
   @override
@@ -13,9 +17,45 @@ class ClassroomList extends StatefulWidget {
 
 class _ClassroomListState extends State<ClassroomList> {
   ScrollController? _controller;
-  @override
+  Future<void> requestStoragePermission() async {
+    PermissionStatus status = await Permission.manageExternalStorage.request();
+
+    if (status.isGranted) {
+      print("저장소 권한이 승인되었습니다.");
+    } else if (status.isDenied) {
+      print("저장소 권한이 거부되었습니다.");
+      openAppSettings();
+    } else if (status.isPermanentlyDenied) {
+      print("저장소 권한이 영구적으로 거부되었습니다. 설정에서 권한을 허용해주세요.");
+      openAppSettings();
+    }
+  }
+
+  void _openFile() async {
+    // 권한 상태 확인 후 파일 선택
+    PermissionStatus status = await Permission.storage.status;
+    if (status.isGranted) {
+      try {
+        FilePickerResult? result =
+            await FilePicker.platform.pickFiles(allowMultiple: true);
+        if (result != null && result.files.single.path != null) {
+          List<File> files = result.paths.map((path) => File(path!)).toList();
+          print("선택된 파일 경로: ${files}");
+        } else {
+          print('파일이 선택되지 않았습니다.');
+        }
+      } catch (e) {
+        print("파일 선택 중 오류 발생: $e");
+      }
+    } else {
+      print('저장소 권한이 없습니다. 권한을 허용해주세요.');
+      await requestStoragePermission();
+    }
+  }
+
   void initState() {
     super.initState();
+    requestStoragePermission();
   }
 
   @override
@@ -149,7 +189,9 @@ class _ClassroomListState extends State<ClassroomList> {
                                         fontSize: 25, color: Colors.black),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _openFile();
+                                    },
                                     icon: Icon(
                                       Icons.cloud_upload_outlined,
                                       size: 30,
@@ -170,23 +212,15 @@ class _ClassroomListState extends State<ClassroomList> {
               height: 25,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                
+              },
               icon: Icon(
                 Icons.add_circle_outline_outlined,
                 color: Colors.blue,
                 size: 50,
               ),
             ),
-            // ElevatedButton(
-            //   onPressed: () {},
-            //   style: ElevatedButton.styleFrom(
-            //     shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(10.0),
-            //     ),
-            //     backgroundColor: Colors.blueAccent,
-            //   ),
-
-            // ),
             SizedBox(
               height: 20,
             ),
