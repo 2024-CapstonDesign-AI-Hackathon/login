@@ -10,7 +10,7 @@ import 'qustion/question3.dart'; //서술형
 void main() {
   runApp(const MyApp());
 }
-  
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

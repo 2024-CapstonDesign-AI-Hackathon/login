@@ -9,5 +9,8 @@ class Lecture {
 
   Lecture(this.id, this.title, this.content_url, this.createdAt, this.user);
 
-  
+  factory Lecture.fromJson(Map<String, dynamic> json) {
+    return Lecture(json['id'], json['title'], json['content_url'],
+        json['createdAt'], json['user']);
+  }
 }
