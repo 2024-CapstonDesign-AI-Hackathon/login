@@ -7,7 +7,6 @@ import 'package:front/domain/user.dart';
 import 'package:front/service/UserService.dart';
 
 class AuthService with ChangeNotifier {
-  late Userservice userservice;
   final storage = FlutterSecureStorage();
   final dio = Dio();
   Token? token; // 토큰 저장 삭제
@@ -15,7 +14,7 @@ class AuthService with ChangeNotifier {
 
   //로그인 요청 id, pw parameter
   //로그인 성공 시 회원 정보 저장
-  Future loginRequest(String email, String password) async {
+  Future<User?> loginRequest(String email, String password) async {
     Response response;
 
     if (email != null && password != null) {
@@ -29,7 +28,7 @@ class AuthService with ChangeNotifier {
 
         User user =
             User.fromJson(response.data.toString() as Map<String, dynamic>);
-        userservice.user = user;
+        return user;
       } else {
         print("에러");
       }

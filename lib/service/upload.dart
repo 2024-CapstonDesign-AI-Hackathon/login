@@ -1,31 +1,41 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:front/Api.dart';
 import 'package:front/auth/token.dart';
+import 'package:front/domain/summaries.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Upload {
-  late Api api;
-  late Token token;
+  Api api = new Api();
+  final storage = FlutterSecureStorage();
+  Upload();
 
   //강의 자료 전송
-  Future<void> dateRequest(File? file) async {
-    if (file != null) {
-      String? access = await token.getToken();
-      var response = await http.post(
-        Uri.parse(api.toString()),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': token.toString(),
-        },
-      );
-      if (response.statusCode == 200) {
-        Map<String, dynamic> responseBody =
-            jsonDecode(utf8.decode(response.bodyBytes));
+  Future<Summaries?> dateRequest(File? file) async {
+    try {
+      if (file != null) {
+        String? access = await storage.read(key: 'Authorization');
+        var response = await http.post(
+          Uri.parse(api.toString()),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': access.toString(),
+          },
+        );
+        if (response.statusCode == 200) {
+          Map<String, dynamic> responseBody =
+              jsonDecode(utf8.decode(response.bodyBytes));
+          Summaries summaries = Summaries.fromJson(responseBody);
+          return summaries;
+        }
+        print("dateRequest 메소드 에러");
       }
+    } catch (e) {
+      print(e);
     }
   }
 

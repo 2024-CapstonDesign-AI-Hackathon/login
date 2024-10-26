@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:front/domain/summaries.dart';
+import 'package:front/service/ClassroomService.dart';
+import 'package:front/service/UserService.dart';
+import 'package:front/service/summariesService.dart';
+import 'package:provider/provider.dart';
 import 'package:front/ClassroomList.dart';
 import 'package:front/chat.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -17,15 +22,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        scaffoldBackgroundColor: Colors.white, // 전체 앱의 Scaffold 배경색을 흰색으로 설정
-        dialogBackgroundColor: Colors.white,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LectureService()),
+        ChangeNotifierProvider(create: (context) => SummariesService()),
+        ChangeNotifierProvider(create: (context) => Userservice()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+          scaffoldBackgroundColor: Colors.white, // 전체 앱의 Scaffold 배경색을 흰색으로 설정
+          dialogBackgroundColor: Colors.white,
+        ),
+        home: Categorilist(),
       ),
-      home: Chat(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:front/upload.dart';
+import 'package:front/service/upload.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Chat extends StatefulWidget {
@@ -12,7 +12,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  late Upload upload;
+  Upload upload = new Upload();
 
   void initState() {
     super.initState();
