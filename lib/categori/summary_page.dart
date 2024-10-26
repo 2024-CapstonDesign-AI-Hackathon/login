@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/chat.dart';
 
 class SummaryPage extends StatelessWidget {
   final String courseName; // 수업명
@@ -40,7 +41,7 @@ class SummaryPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    summaryContent,
+                    "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ",
                     style: TextStyle(fontSize: 16),
                   ),
                 ),
@@ -50,7 +51,12 @@ class SummaryPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Chat()),
+          );
+        },
         child: Icon(
           Icons.chat,
           color: Colors.white,
