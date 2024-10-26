@@ -59,7 +59,8 @@ class _QuestionScreen3State extends State<QuestionScreen3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('서술형 문제'),
+        title: Text('서술형 문제', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blueAccent,
         centerTitle: true,
       ),
       body: PageView.builder(
