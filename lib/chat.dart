@@ -89,16 +89,18 @@ class _ChatState extends State<Chat> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Text(
-                '챗봇 히스토리',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+            Container(
+              height: 80, // 원하는 높이로 설정
+              child: DrawerHeader(
+                child: Text(
+                  '챗봇 히스토리',
+                  style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                decoration: BoxDecoration(
+                  color: Colors.blueAccent, // 배경색 설정
+                ),
+                margin: EdgeInsets.all(0.0),
+                padding: EdgeInsets.all(16.0),
               ),
             ),
             ListTile(
@@ -122,6 +124,7 @@ class _ChatState extends State<Chat> {
           ],
         ),
       ),
+
       body: Column(
         children: [
           Expanded(
