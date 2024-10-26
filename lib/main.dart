@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/categori/summary_page.dart';
 import 'package:front/domain/summaries.dart';
 import 'package:front/service/ClassroomService.dart';
 import 'package:front/service/UserService.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white, // 전체 앱의 Scaffold 배경색을 흰색으로 설정
           dialogBackgroundColor: Colors.white,
         ),
-        home: Categorilist(),
+        home: LoginScreen(),
       ),
     );
   }

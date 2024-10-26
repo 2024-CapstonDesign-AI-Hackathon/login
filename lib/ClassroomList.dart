@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:front/categori/summary_page.dart';
 
 class ClassroomList extends StatefulWidget {
   @override
@@ -118,47 +119,46 @@ class _ClassroomListState extends State<ClassroomList> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Card(
-                            color: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16.0),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              elevation: 4.0, // 그림자 깊이
+                              padding: EdgeInsets.zero,
                             ),
-                            elevation: 4.0, // 그림자 깊이
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SummaryPage()),
+                              );
+                            }, // 여기에 원하는 동작을 추가하세요
                             child: Container(
                               height: 90,
                               width: 350,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "수업명",
-                                      style: TextStyle(fontSize: 25),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "수업명",
+                                    style: TextStyle(
+                                        fontSize: 25, color: Colors.black),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.cloud_upload_outlined,
+                                      size: 30,
                                     ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        backgroundColor: Colors.blueAccent,
-                                      ),
-                                      onPressed: () {},
-                                      child: Text(
-                                        "입장",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  )
+                                ],
                               ),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     );
@@ -169,22 +169,24 @@ class _ClassroomListState extends State<ClassroomList> {
             SizedBox(
               height: 25,
             ),
-            ElevatedButton(
+            IconButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                backgroundColor: Colors.blueAccent,
-              ),
-              child: Text(
-                "수업 생성",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+              icon: Icon(
+                Icons.add_circle_outline_outlined,
+                color: Colors.blue,
+                size: 50,
               ),
             ),
+            // ElevatedButton(
+            //   onPressed: () {},
+            //   style: ElevatedButton.styleFrom(
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10.0),
+            //     ),
+            //     backgroundColor: Colors.blueAccent,
+            //   ),
+
+            // ),
             SizedBox(
               height: 20,
             ),

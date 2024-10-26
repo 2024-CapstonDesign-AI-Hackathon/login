@@ -29,7 +29,8 @@ class _ClassroomListState extends State<Categorilist> {
 
     if (status.isGranted) {
       try {
-        FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+        FilePickerResult? result =
+            await FilePicker.platform.pickFiles(allowMultiple: true);
 
         if (result != null && result.files.isNotEmpty) {
           List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -112,7 +113,7 @@ class _ClassroomListState extends State<Categorilist> {
                   children: [
                     // 고정된 카드 6개
                     _buildCategoryCard("챗봇", Chat()),
-                    _buildCategoryCard("요약", SummaryPage(courseName: "수업명", summaryContent: "여기에 요약 내용이 들어갑니다.")),
+                    _buildCategoryCard("요약", SummaryPage()),
                     _buildCategoryCard("객관식", QuestionScreen1()),
                     _buildCategoryCard("단답식", QuestionScreen2()),
                     _buildCategoryCard("서술형", QuestionScreen3()),
@@ -159,7 +160,8 @@ class _ClassroomListState extends State<Categorilist> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => page), // 각 카테고리 페이지로 이동
+                      MaterialPageRoute(
+                          builder: (context) => page), // 각 카테고리 페이지로 이동
                     );
                   },
                   child: Text(
