@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,13 +12,12 @@ class Chat extends StatefulWidget {
 
 class _ChatState extends State<Chat> {
   void _openFile() async {
-    // 권한 상태 확인 후 파일 선택
     PermissionStatus status = await Permission.storage.status;
 
     if (status.isGranted) {
       try {
         FilePickerResult? result =
-            await FilePicker.platform.pickFiles(allowMultiple: true);
+        await FilePicker.platform.pickFiles(allowMultiple: true);
 
         if (result != null && result.files.single.path != null) {
           List<File> files = result.paths.map((path) => File(path!)).toList();
@@ -37,19 +35,15 @@ class _ChatState extends State<Chat> {
   }
 
   Future<void> requestStoragePermission() async {
-    // 저장소 권한 요청
     PermissionStatus status = await Permission.manageExternalStorage.request();
 
     if (status.isGranted) {
-      // 권한이 승인되었을 때 실행할 코드
       print("저장소 권한이 승인되었습니다.");
     } else if (status.isDenied) {
-      // 권한이 거부되었을 때 실행할 코드
       print("저장소 권한이 거부되었습니다.");
     } else if (status.isPermanentlyDenied) {
-      // 권한이 영구적으로 거부되었을 때, 설정으로 안내하는 코드
       print("저장소 권한이 영구적으로 거부되었습니다. 설정에서 권한을 허용해주세요.");
-      openAppSettings(); // 앱 설정 화면으로 이동
+      openAppSettings();
     }
   }
 
@@ -66,9 +60,9 @@ class _ChatState extends State<Chat> {
           icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
-          ), // 뒤로가기 아이콘
+          ),
           onPressed: () {
-            Navigator.pop(context); // 이전 화면으로 이동
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -78,6 +72,54 @@ class _ChatState extends State<Chat> {
           ),
         ),
         backgroundColor: Colors.blueAccent,
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                // 드로어 열기
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(
+                '챗봇 히스토리',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+              ),
+            ),
+            ListTile(
+              title: Text('히스토리 1'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('히스토리 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('히스토리 3'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -86,10 +128,9 @@ class _ChatState extends State<Chat> {
               reverse: true,
               itemCount: 10, // 샘플 메시지 수
               itemBuilder: (context, index) {
-                bool isMe = index % 2 == 0; // 홀수/짝수로 사용자 메시지 구분
+                bool isMe = index % 2 == 0;
                 return Align(
-                  alignment:
-                      isMe ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -118,16 +159,7 @@ class _ChatState extends State<Chat> {
                     color: Colors.blueAccent,
                   ),
                   onPressed: () async {
-                    // _openFile();
-                    FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(allowMultiple: true);
-
-                    if (result != null) {
-                      List<File> files =
-                          result.paths.map((path) => File(path!)).toList();
-                    } else {
-                      // User canceled the picker
-                    }
+                    _openFile();
                   },
                 ),
                 SizedBox(
@@ -144,16 +176,12 @@ class _ChatState extends State<Chat> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.blueAccent,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
+                IconButton(
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blueAccent,
+                  ),
+                  onPressed: () {},
                 ),
               ],
             ),

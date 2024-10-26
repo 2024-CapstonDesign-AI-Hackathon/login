@@ -7,13 +7,6 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.lightBlue],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -21,7 +14,7 @@ class LoginScreen extends StatelessWidget {
             Text(
               'SMART STUDY',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
@@ -36,7 +29,7 @@ class LoginScreen extends StatelessWidget {
                   TextField(
                     decoration: InputDecoration(
                       labelText: '아이디',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       filled: true,
                       fillColor: Colors.white24,
                       border: OutlineInputBorder(
@@ -49,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: '패스워드',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.black),
                       filled: true,
                       fillColor: Colors.white24,
                       border: OutlineInputBorder(
