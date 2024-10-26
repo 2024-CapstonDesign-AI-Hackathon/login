@@ -11,6 +11,5 @@ class chatbots {
 
   chatbots(this.id, this.question, this.response, this.user, this.lecture,
       this.createdAt);
-
-  
+ 
 }

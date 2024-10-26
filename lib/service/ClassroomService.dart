@@ -24,6 +24,7 @@ class LectureService with ChangeNotifier {
       Uri.parse(api.toString()),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token.toString(),
       },
     );
     if (response.statusCode == 200) {

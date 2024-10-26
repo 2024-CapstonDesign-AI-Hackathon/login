@@ -24,7 +24,7 @@ class AuthService with ChangeNotifier {
         data: {'email': email, 'password': password},
       );
       if (response.statusCode == 200) {
-        String access = response.headers['authorization'] as String;
+        String access = response.headers['Authorization'].toString();
         token?.saveToken(access);
 
         User user =
