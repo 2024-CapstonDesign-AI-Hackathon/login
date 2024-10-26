@@ -90,7 +90,8 @@ class _QuestionScreen2State extends State<QuestionScreen2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('단답형 문제'),
+        title: Text('단답식 문제', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.blueAccent,
         centerTitle: true,
       ),
       body: PageView.builder(
