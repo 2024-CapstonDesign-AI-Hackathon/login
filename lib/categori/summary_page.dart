@@ -49,6 +49,14 @@ class SummaryPage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(
+          Icons.chat,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.blue,
+      ),
     );
   }
 }
