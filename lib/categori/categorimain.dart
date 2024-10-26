@@ -1,12 +1,13 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-// 이미 작성된 페이지를 import합니다.
 import '../chat.dart'; // 챗봇 페이지
-//import 'summary_page.dart'; // 요약 페이지
+import '../categori/summary_page.dart'; // 요약 페이지
 import '../question/question1.dart'; // 객관식 페이지
 import '../question/question2.dart'; // 단답식 페이지
 import '../question/question3.dart'; // 서술형 페이지
-//import 'learning_management.dart'; // 학습관리 페이지
 
 class Categorilist extends StatefulWidget {
   @override
@@ -17,6 +18,50 @@ class Categorilist extends StatefulWidget {
 }
 
 class _ClassroomListState extends State<Categorilist> {
+  @override
+  void initState() {
+    super.initState();
+    requestStoragePermission(); // 권한 요청
+  }
+
+  void _openFile() async {
+    PermissionStatus status = await Permission.storage.status;
+
+    if (status.isGranted) {
+      try {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(allowMultiple: true);
+
+        if (result != null && result.files.isNotEmpty) {
+          List<File> files = result.paths.map((path) => File(path!)).toList();
+          print("선택된 파일 경로: ${files}");
+          // 선택된 파일을 처리하는 추가 로직을 여기에 추가할 수 있습니다.
+          // 예를 들어, 파일 리스트를 보여주는 다이얼로그 등으로 처리할 수 있습니다.
+        } else {
+          print('파일이 선택되지 않았습니다.');
+        }
+      } catch (e) {
+        print("파일 선택 중 오류 발생: $e");
+      }
+    } else {
+      print('저장소 권한이 없습니다. 권한을 허용해주세요.');
+      await requestStoragePermission();
+    }
+  }
+
+  Future<void> requestStoragePermission() async {
+    PermissionStatus status = await Permission.storage.request();
+
+    if (status.isGranted) {
+      print("저장소 권한이 승인되었습니다.");
+    } else if (status.isDenied) {
+      print("저장소 권한이 거부되었습니다.");
+      // 필요시 사용자에게 권한 요청을 다시 할 수 있습니다.
+    } else if (status.isPermanentlyDenied) {
+      print("저장소 권한이 영구적으로 거부되었습니다. 설정에서 권한을 허용해주세요.");
+      openAppSettings();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +82,14 @@ class _ClassroomListState extends State<Categorilist> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.upload),
+            onPressed: () {
+              _openFile(); // 파일 선택 함수 호출
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -59,11 +112,10 @@ class _ClassroomListState extends State<Categorilist> {
                   children: [
                     // 고정된 카드 6개
                     _buildCategoryCard("챗봇", Chat()),
-                    //_buildCategoryCard("요약", summary()),
+                    _buildCategoryCard("요약", SummaryPage(courseName: "수업명", summaryContent: "여기에 요약 내용이 들어갑니다.")),
                     _buildCategoryCard("객관식", QuestionScreen1()),
                     _buildCategoryCard("단답식", QuestionScreen2()),
                     _buildCategoryCard("서술형", QuestionScreen3()),
-                    //_buildCategoryCard("학습관리", LearningManagementPage()),
                   ],
                 ),
               ),
