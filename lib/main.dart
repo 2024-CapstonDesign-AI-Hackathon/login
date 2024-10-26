@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:front/ClassroomList.dart';
 import 'package:front/chat.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../categori/categorimain.dart';
 import '../login.dart';
-import 'qustion/question1.dart'; //객관식
-import 'qustion/question2.dart'; //단답식
-import 'qustion/question3.dart'; //서술형
+import '../question/question1.dart'; //객관식
+import '../question/question2.dart'; //단답식
+import '../question/question3.dart'; //서술형
 
 void main() {
   runApp(const MyApp());
