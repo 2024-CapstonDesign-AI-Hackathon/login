@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/ClassroomList.dart';
 import 'package:front/auth/AuthService.dart';
 import 'package:front/domain/user.dart';
 import 'package:front/service/UserService.dart';
@@ -63,12 +64,17 @@ class LoginScreen extends StatelessWidget {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            // 로그인 버튼 눌러왔을 때  
-                            Future<User?> user =
-                                authService.loginRequest("id", "pw");
-                            if (user != null) {
-                              userservice.user = user as User?;
-                            }
+                            // // 로그인 버튼 눌러왔을 때
+                            // Future<User?> user =
+                            //     authService.loginRequest("id", "pw");
+                            // if (user != null) {
+                            //   userservice.user = user as User?;
+                            // }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ClassroomList()),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 16),

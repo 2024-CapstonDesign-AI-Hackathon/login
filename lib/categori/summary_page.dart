@@ -4,7 +4,9 @@ class SummaryPage extends StatelessWidget {
   final String courseName; // 수업명
   final String summaryContent; // 요약 내용
 
-  SummaryPage({Key? key, required this.courseName, required this.summaryContent}) : super(key: key);
+  SummaryPage(
+      {Key? key, required this.courseName, required this.summaryContent})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
